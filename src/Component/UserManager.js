@@ -1,9 +1,5 @@
-export default function UserManager({
-  username,
-  height,
-  onInputChange,
-  onCreate,
-}) {
+import React, { useMemo, useRef, useState } from "react";
+const UserManager = ({ username, height, onInputChange, onCreate }) => {
   return (
     <div>
       <input
@@ -23,4 +19,6 @@ export default function UserManager({
       <button>삭제</button>
     </div>
   );
-}
+};
+export default React.memo(UserManager);
+// React.memo : 컴포넌트의 리렌더링 성능 최적화
