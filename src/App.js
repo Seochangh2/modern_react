@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef, useState } from "react";
+import UserList from "./Component/UserList";
+import UserManager from "./Component/UserManager";
 
 function App() {
+  const onInputChange = (e) => {
+    const { value, name } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
+  const onCreate = () => {
+    setUsers(
+      users.concat({ id: next_id.current, username: username, height: height })
+    );
+    next_id.current += 1;
+  };
+  const [users, setUsers] = useState([
+    { id: 1, username: "changhee", height: "178" },
+    { id: 2, username: "haeju", height: "160" },
+  ]);
+  const [inputs, setInputs] = useState({ username: "", height: "" });
+  const { username, height } = inputs;
+  const next_id = useRef(3);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <UserManager
+        username={username}
+        height={height}
+        onInputChange={onInputChange}
+        onCreate={onCreate}
+      ></UserManager>
+      <div>
+        <UserList users={users}></UserList>
+      </div>
     </div>
   );
 }
